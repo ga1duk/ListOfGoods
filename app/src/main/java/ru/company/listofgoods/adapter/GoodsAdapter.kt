@@ -32,6 +32,7 @@ class GoodsViewHolder(
             .load("${BuildConfig.BASE_URL}${dataModel.DETAIL_PICTURE}")
             .into(binding.ivGoods)
         binding.tvPrice.text = dataModel.EXTENDED_PRICE[0].PRICE.toString() + " \u20BD"
+        binding.tvName.text = dataModel.NAME
     }
 }
 

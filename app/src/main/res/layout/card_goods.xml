@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginRight="25dp"
-    android:layout_marginLeft="25dp">
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
 
     <ImageView
         android:id="@+id/iv_goods"
@@ -17,14 +17,27 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_launcher_background" />
 
+    <ru.company.listofgoods.VerticalTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|start"
+        android:maxWidth="150dp"
+        android:padding="10dp"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_goods"
+        app:layout_constraintEnd_toStartOf="@id/iv_goods"
+        app:layout_constraintTop_toTopOf="@id/iv_goods"
+        tools:text="Hello world" />
+
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_goods"
-        tools:text="275р"
-        android:textColor="@color/black"
-        android:textStyle="bold"/>
+        tools:text="275р" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
