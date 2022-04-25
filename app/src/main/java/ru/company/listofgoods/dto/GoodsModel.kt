@@ -13,5 +13,11 @@ data class TovaryModel(
 
 data class DataModel(
     val ID: Int,
-    val NAME: String
+    val NAME: String,
+    val DETAIL_PICTURE: String,
+    val EXTENDED_PRICE: List<PriceModel>
+)
+
+data class PriceModel(
+    val PRICE: Double
 )
