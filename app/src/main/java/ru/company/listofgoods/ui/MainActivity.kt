@@ -35,6 +35,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 val body = response.body() ?: throw ApiError(response.code(), response.message())
 
+                when (body.status) {
+                    RESULT_SUCCESS -> binding.rvGoods.visibility = View.VISIBLE
+                    RESULT_ERROR -> binding.rvGoods.visibility = View.GONE
+                    else -> binding.rvGoods.visibility = View.GONE
+                }
+
                 binding.tvFirst.text = body.TOVARY[0].NAME
                 binding.tvSecond.text = body.TOVARY[1].NAME
                 binding.tvThird.text = body.TOVARY[2].NAME
@@ -50,13 +56,6 @@ class MainActivity : AppCompatActivity() {
                 binding.tvThird.setOnClickListener {
                     adapter.submitList(body.TOVARY[2].data)
                 }
-
-                when (body.status) {
-                    RESULT_SUCCESS -> binding.rvGoods.visibility = View.VISIBLE
-                    RESULT_ERROR -> binding.rvGoods.visibility = View.GONE
-                    else -> binding.rvGoods.visibility = View.GONE
-                }
-
 
             } catch (e: IOException) {
                 throw NetworkError
