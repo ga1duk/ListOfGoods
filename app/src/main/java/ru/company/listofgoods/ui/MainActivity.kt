@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
+import ru.company.listofgoods.BuildConfig
 import ru.company.listofgoods.R
 import ru.company.listofgoods.api.GoodsApi
 import ru.company.listofgoods.databinding.ActivityMainBinding
@@ -30,13 +32,17 @@ class MainActivity : AppCompatActivity() {
                     throw ApiError(response.code(), response.message())
                 }
                 val body = response.body() ?: throw ApiError(response.code(), response.message())
-                binding.tvStatus.setText(body.status)
-                binding.tvData.text = body.TOVARY.get(0).NAME
+                binding.tvStatus.text = body.status
+                binding.tvData.text = body.TOVARY[0].NAME
                 when (body.status) {
                     RESULT_SUCCESS -> binding.tvData.visibility = View.VISIBLE
                     RESULT_ERROR -> binding.tvData.visibility = View.GONE
                     else -> binding.tvData.text = ""
                 }
+                val image = body.TOVARY[0].data[0].DETAIL_PICTURE.replace("\\", "")
+                Glide.with(binding.ivGoods)
+                    .load("${BuildConfig.BASE_URL}$image")
+                    .into(binding.ivGoods)
 
             } catch (e: IOException) {
                 throw NetworkError

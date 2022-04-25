@@ -13,5 +13,6 @@ data class TovaryModel(
 
 data class DataModel(
     val ID: Int,
-    val NAME: String
+    val NAME: String,
+    val DETAIL_PICTURE: String
 )
