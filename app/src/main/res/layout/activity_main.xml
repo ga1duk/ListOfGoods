@@ -6,51 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_first"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Овощи"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@id/rv_goods"
-        app:layout_constraintEnd_toStartOf="@id/tv_second"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp" />
-
-    <TextView
-        android:id="@+id/tv_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Фрукты"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toTopOf="@id/rv_goods"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_third"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="Зелень"
-        android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@id/tv_second"
-        app:layout_constraintBottom_toTopOf="@id/rv_goods"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="32dp" />
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_goods"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        tools:text="Hello World!"
-        tools:listitem="@layout/card_goods"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        tools:listitem="@layout/card_goods"
+        tools:text="Hello World!" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

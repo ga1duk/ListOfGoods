@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 import ru.company.listofgoods.R
 import ru.company.listofgoods.api.GoodsApi
@@ -41,21 +42,30 @@ class MainActivity : AppCompatActivity() {
                     else -> binding.rvGoods.visibility = View.GONE
                 }
 
-                binding.tvFirst.text = body.TOVARY[0].NAME
-                binding.tvSecond.text = body.TOVARY[1].NAME
-                binding.tvThird.text = body.TOVARY[2].NAME
+                adapter.submitList(body.TOVARY[0].data)
 
-                binding.tvFirst.setOnClickListener {
-                    adapter.submitList(body.TOVARY[0].data)
-                }
+                val tablayout = binding.tabLayout
 
-                binding.tvSecond.setOnClickListener {
-                    adapter.submitList(body.TOVARY[1].data)
-                }
+                tablayout.addTab(tablayout.newTab().setText(body.TOVARY[0].NAME), 0)
+                tablayout.addTab(tablayout.newTab().setText(body.TOVARY[1].NAME), 1)
+                tablayout.addTab(tablayout.newTab().setText(body.TOVARY[2].NAME), 2)
 
-                binding.tvThird.setOnClickListener {
-                    adapter.submitList(body.TOVARY[2].data)
-                }
+                tablayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+                    override fun onTabSelected(tab: TabLayout.Tab?) {
+                        when (tab?.position) {
+                            0 -> adapter.submitList(body.TOVARY[0].data)
+                            1 -> adapter.submitList(body.TOVARY[1].data)
+                            2 -> adapter.submitList(body.TOVARY[2].data)
+                        }
+                    }
+
+                    override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    }
+
+                    override fun onTabReselected(tab: TabLayout.Tab?) {
+                    }
+
+                })
 
             } catch (e: IOException) {
                 throw NetworkError
