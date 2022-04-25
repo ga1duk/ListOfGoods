@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
-import ru.company.listofgoods.BuildConfig
 import ru.company.listofgoods.R
 import ru.company.listofgoods.api.GoodsApi
 import ru.company.listofgoods.databinding.ActivityMainBinding
+import ru.mypackage.myweatherapp.adapter.GoodsAdapter
 import ru.mypackage.nmedia.error.ApiError
 import ru.mypackage.nmedia.error.NetworkError
 import ru.mypackage.nmedia.error.UnknownError
@@ -25,6 +24,9 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val adapter = GoodsAdapter()
+        binding.rvGoods.adapter = adapter
+
         lifecycleScope.launch {
             try {
                 val response = GoodsApi.retrofitService.getGoods()
@@ -32,17 +34,29 @@ class MainActivity : AppCompatActivity() {
                     throw ApiError(response.code(), response.message())
                 }
                 val body = response.body() ?: throw ApiError(response.code(), response.message())
-                binding.tvStatus.text = body.status
-                binding.tvData.text = body.TOVARY[0].NAME
-                when (body.status) {
-                    RESULT_SUCCESS -> binding.tvData.visibility = View.VISIBLE
-                    RESULT_ERROR -> binding.tvData.visibility = View.GONE
-                    else -> binding.tvData.text = ""
+
+                binding.tvFirst.text = body.TOVARY[0].NAME
+                binding.tvSecond.text = body.TOVARY[1].NAME
+                binding.tvThird.text = body.TOVARY[2].NAME
+
+                binding.tvFirst.setOnClickListener {
+                    adapter.submitList(body.TOVARY[0].data)
                 }
-                val image = body.TOVARY[0].data[0].DETAIL_PICTURE.replace("\\", "")
-                Glide.with(binding.ivGoods)
-                    .load("${BuildConfig.BASE_URL}$image")
-                    .into(binding.ivGoods)
+
+                binding.tvSecond.setOnClickListener {
+                    adapter.submitList(body.TOVARY[1].data)
+                }
+
+                binding.tvThird.setOnClickListener {
+                    adapter.submitList(body.TOVARY[2].data)
+                }
+
+                when (body.status) {
+                    RESULT_SUCCESS -> binding.rvGoods.visibility = View.VISIBLE
+                    RESULT_ERROR -> binding.rvGoods.visibility = View.GONE
+                    else -> binding.rvGoods.visibility = View.GONE
+                }
+
 
             } catch (e: IOException) {
                 throw NetworkError
